@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>小可爱的博客</title>
+  <title>愿你历尽千帆，归来仍是少年！</title>
   
   
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-01-09T13:57:20.158Z</updated>
+  <updated>2020-01-11T08:20:35.539Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring容器bean的三种装配机制</title>
+    <link href="http://yoursite.com/2020/01/11/Spring%E5%AE%B9%E5%99%A8bean%E7%9A%84%E4%B8%89%E7%A7%8D%E8%A3%85%E9%85%8D%E6%9C%BA%E5%88%B6/"/>
+    <id>http://yoursite.com/2020/01/11/Spring%E5%AE%B9%E5%99%A8bean%E7%9A%84%E4%B8%89%E7%A7%8D%E8%A3%85%E9%85%8D%E6%9C%BA%E5%88%B6/</id>
+    <published>2020-01-11T07:42:12.000Z</published>
+    <updated>2020-01-11T08:20:35.539Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="一-配置bean的一些知识"><a href="#一-配置bean的一些知识" class="headerlink" title="一. 配置bean的一些知识"></a>一. 配置bean的一些知识</h2><ol><li>Spring容器负责创建应用程序中的bean并通过DI来协调这些对象的关系，作为开发人员，首先要先告诉Spring要创建哪些bean并且如何将其装配在一起，然后才能从容器中使用这些bean。</li><li>总计有三种配置方式，并且这三种方式是可以互相搭配的，即你可以选择使用XML来装配一些bean，使用Spring基于java（JavaConfig）的方式装配一些bean，然后剩余的bean让Spring去自动发现。</li><li>建议是尽可能使用自动配置的机制，显式配置越少越好。必须要显式配置的时候优先选择类型安全并且比XML更加强大的JavaConfig。最后只有当你想要使用便利的XML命名空间的时候，并且在JavaConfig中没有同样的实现时，才应该使用XML配置。</li></ol><h2 id="二-三种bean装配机制"><a href="#二-三种bean装配机制" class="headerlink" title="二. 三种bean装配机制**"></a>二. 三种bean装配机制**</h2><h3 id="方式1-在XML中进行显式配置"><a href="#方式1-在XML中进行显式配置" class="headerlink" title="方式1 在XML中进行显式配置"></a>方式1 在XML中进行显式配置</h3><p>1</p><h3 id="方式2-在java中进行显式配置"><a href="#方式2-在java中进行显式配置" class="headerlink" title="方式2 在java中进行显式配置"></a>方式2 在java中进行显式配置</h3><p>2</p><h3 id="方式3-隐式的bean发现机制和自动装配"><a href="#方式3-隐式的bean发现机制和自动装配" class="headerlink" title="方式3 隐式的bean发现机制和自动装配"></a>方式3 隐式的bean发现机制和自动装配</h3><p>Spring从两个角度来实现自动化装配 ：</p><ol><li>组件扫描：Spring会自动发现应用上下文所创建的bean。</li><li>自动装配：Spring会自动满足bean之间的依赖。</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;一-配置bean的一些知识&quot;&gt;&lt;a href=&quot;#一-配置bean的一些知识&quot; class=&quot;headerlink&quot; title=&quot;一. 配置bean的一些知识&quot;&gt;&lt;/a&gt;一. 配置bean的一些知识&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Spring容器负责创建应用程序中的
+      
+    
+    </summary>
+    
+    
+      <category term="Spring" scheme="http://yoursite.com/categories/Spring/"/>
+    
+    
+      <category term="Spring" scheme="http://yoursite.com/tags/Spring/"/>
+    
+      <category term="bean" scheme="http://yoursite.com/tags/bean/"/>
+    
+      <category term="配置" scheme="http://yoursite.com/tags/%E9%85%8D%E7%BD%AE/"/>
+    
+  </entry>
   
   <entry>
     <title>hexo主题增加页面出现的bug</title>
