@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-01-11T08:20:35.539Z</updated>
+  <updated>2020-01-16T13:10:39.799Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,13 +17,43 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>令牌机制（token）防止表单重复提交</title>
+    <link href="http://yoursite.com/2020/01/16/%E4%BB%A4%E7%89%8C%E6%9C%BA%E5%88%B6%EF%BC%88token%EF%BC%89%E9%98%B2%E6%AD%A2%E8%A1%A8%E5%8D%95%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/"/>
+    <id>http://yoursite.com/2020/01/16/%E4%BB%A4%E7%89%8C%E6%9C%BA%E5%88%B6%EF%BC%88token%EF%BC%89%E9%98%B2%E6%AD%A2%E8%A1%A8%E5%8D%95%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/</id>
+    <published>2020-01-16T11:43:41.000Z</published>
+    <updated>2020-01-16T13:10:39.799Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="令牌机制"><a href="#令牌机制" class="headerlink" title="令牌机制"></a>令牌机制</h2><p><code>token</code>即标志、记号的意思，在IT领域也叫作<code>令牌</code>。其实说的更通俗点可以叫暗号，在一些数据传输之前，要先进行暗号的核对，不同的暗号被授权不同的数据操作。</p><h2 id="造成表单重复提交的原因"><a href="#造成表单重复提交的原因" class="headerlink" title="造成表单重复提交的原因"></a>造成表单重复提交的原因</h2><p>1、由于服务器缓存慢或网络延迟的原因，重复点击提交按钮<br>2、已经提交成功，刷新界面（forward）<br>3、已经提交成功，通过回退再次点击提交按钮</p><h2 id="使用令牌机制解决表单的重复提交问题"><a href="#使用令牌机制解决表单的重复提交问题" class="headerlink" title="使用令牌机制解决表单的重复提交问题"></a>使用令牌机制解决表单的重复提交问题</h2><p><strong>1.、在客户端界面生成令牌</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">&#x2F;&#x2F;生成一个不重复的令牌</span><br><span class="line">String uuid&#x3D;UUID.randomUUID.toString();</span><br><span class="line">session.setAttribute(&quot;token&quot;,uuid);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure><p><strong>2、 在表单提交时附加上令牌</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action&#x3D;&quot;demoServlet&quot;&gt;</span><br><span class="line">...</span><br><span class="line">&lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;token&quot; value&#x3D;&quot;&lt;%&#x3D;uuid&gt;&quot;&gt;</span><br><span class="line">&lt;input type&#x3D;&quot;submit&quot; value&#x3D;&quot;提交表单&quot;&gt;</span><br><span class="line">&lt;&#x2F;form&gt;</span><br></pre></td></tr></table></figure><p><strong>3、在服务器端验证令牌</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public void demoServlet()&#123;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;1.从session中取出令牌</span><br><span class="line">String token&#x3D;session.getAttribute(&quot;token&quot;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;2.从页面提交的数据中取出令牌</span><br><span class="line">String pageToken&#x3D;request.getParameter(&quot;token&quot;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;3.移除session中的令牌</span><br><span class="line">session.removeAttribute(&quot;token&quot;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;4.比较两个令牌是否相同？</span><br><span class="line">&#x2F;&#x2F;4.1当令牌相等时（第一次提交后两个令牌肯定是一样的）</span><br><span class="line">if(token.equals(&quot;pageToken&quot;))&#123;</span><br><span class="line">    执行正常提交数据后的处理操作;</span><br><span class="line">    ...</span><br><span class="line">&#125;else    &#x2F;&#x2F;4.2当令牌不相等时</span><br><span class="line">    提示用户不要重复提交表单;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;令牌机制&quot;&gt;&lt;a href=&quot;#令牌机制&quot; class=&quot;headerlink&quot; title=&quot;令牌机制&quot;&gt;&lt;/a&gt;令牌机制&lt;/h2&gt;&lt;p&gt;&lt;code&gt;token&lt;/code&gt;即标志、记号的意思，在IT领域也叫作&lt;code&gt;令牌&lt;/code&gt;。其实说的更通俗点可以
+      
+    
+    </summary>
+    
+    
+      <category term="令牌" scheme="http://yoursite.com/categories/%E4%BB%A4%E7%89%8C/"/>
+    
+    
+      <category term="令牌" scheme="http://yoursite.com/tags/%E4%BB%A4%E7%89%8C/"/>
+    
+      <category term="小知识点" scheme="http://yoursite.com/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
+    
+      <category term="表单提交" scheme="http://yoursite.com/tags/%E8%A1%A8%E5%8D%95%E6%8F%90%E4%BA%A4/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Spring容器bean的三种装配机制</title>
     <link href="http://yoursite.com/2020/01/11/Spring%E5%AE%B9%E5%99%A8bean%E7%9A%84%E4%B8%89%E7%A7%8D%E8%A3%85%E9%85%8D%E6%9C%BA%E5%88%B6/"/>
     <id>http://yoursite.com/2020/01/11/Spring%E5%AE%B9%E5%99%A8bean%E7%9A%84%E4%B8%89%E7%A7%8D%E8%A3%85%E9%85%8D%E6%9C%BA%E5%88%B6/</id>
     <published>2020-01-11T07:42:12.000Z</published>
-    <updated>2020-01-11T08:20:35.539Z</updated>
+    <updated>2020-01-12T02:19:11.101Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="一-配置bean的一些知识"><a href="#一-配置bean的一些知识" class="headerlink" title="一. 配置bean的一些知识"></a>一. 配置bean的一些知识</h2><ol><li>Spring容器负责创建应用程序中的bean并通过DI来协调这些对象的关系，作为开发人员，首先要先告诉Spring要创建哪些bean并且如何将其装配在一起，然后才能从容器中使用这些bean。</li><li>总计有三种配置方式，并且这三种方式是可以互相搭配的，即你可以选择使用XML来装配一些bean，使用Spring基于java（JavaConfig）的方式装配一些bean，然后剩余的bean让Spring去自动发现。</li><li>建议是尽可能使用自动配置的机制，显式配置越少越好。必须要显式配置的时候优先选择类型安全并且比XML更加强大的JavaConfig。最后只有当你想要使用便利的XML命名空间的时候，并且在JavaConfig中没有同样的实现时，才应该使用XML配置。</li></ol><h2 id="二-三种bean装配机制"><a href="#二-三种bean装配机制" class="headerlink" title="二. 三种bean装配机制**"></a>二. 三种bean装配机制**</h2><h3 id="方式1-在XML中进行显式配置"><a href="#方式1-在XML中进行显式配置" class="headerlink" title="方式1 在XML中进行显式配置"></a>方式1 在XML中进行显式配置</h3><p>1</p><h3 id="方式2-在java中进行显式配置"><a href="#方式2-在java中进行显式配置" class="headerlink" title="方式2 在java中进行显式配置"></a>方式2 在java中进行显式配置</h3><p>2</p><h3 id="方式3-隐式的bean发现机制和自动装配"><a href="#方式3-隐式的bean发现机制和自动装配" class="headerlink" title="方式3 隐式的bean发现机制和自动装配"></a>方式3 隐式的bean发现机制和自动装配</h3><p>Spring从两个角度来实现自动化装配 ：</p><ol><li>组件扫描：Spring会自动发现应用上下文所创建的bean。</li><li>自动装配：Spring会自动满足bean之间的依赖。</li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="一-配置bean的一些知识"><a href="#一-配置bean的一些知识" class="headerlink" title="一. 配置bean的一些知识"></a>一. 配置bean的一些知识</h2><ol><li>Spring容器负责创建应用程序中的bean并通过DI来协调这些对象的关系，作为开发人员，首先要先告诉Spring要创建哪些bean并且如何将其装配在一起，然后才能从容器中使用这些bean。</li><li>总计有三种配置方式，并且这三种方式是可以互相搭配的，即你可以选择使用XML来装配一些bean，使用Spring基于java（JavaConfig）的方式装配一些bean，然后剩余的bean让Spring去自动发现。</li><li>建议是尽可能使用自动配置的机制，显式配置越少越好。必须要显式配置的时候优先选择类型安全并且比XML更加强大的JavaConfig。最后只有当你想要使用便利的XML命名空间的时候，并且在JavaConfig中没有同样的实现时，才应该使用XML配置。</li></ol><h2 id="二-三种bean装配机制"><a href="#二-三种bean装配机制" class="headerlink" title="二. 三种bean装配机制"></a>二. 三种bean装配机制</h2><h3 id="方式1-在XML中进行显式配置"><a href="#方式1-在XML中进行显式配置" class="headerlink" title="方式1 在XML中进行显式配置"></a>方式1 在XML中进行显式配置</h3><p>1</p><h3 id="方式2-在java中进行显式配置"><a href="#方式2-在java中进行显式配置" class="headerlink" title="方式2 在java中进行显式配置"></a>方式2 在java中进行显式配置</h3><p>2</p><h3 id="方式3-隐式的bean发现机制和自动装配"><a href="#方式3-隐式的bean发现机制和自动装配" class="headerlink" title="方式3 隐式的bean发现机制和自动装配"></a>方式3 隐式的bean发现机制和自动装配</h3><p>Spring从两个角度来实现自动化装配 ：</p><ol><li>组件扫描：Spring会自动发现应用上下文所创建的bean（默认是不开启的）。</li><li>自动装配：Spring会自动满足bean之间的依赖。</li></ol>]]></content>
     
     <summary type="html">
     
