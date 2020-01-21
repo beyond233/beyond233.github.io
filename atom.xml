@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-01-21T09:38:56.512Z</updated>
+  <updated>2020-01-21T10:06:13.910Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,57 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>test</title>
+    <link href="http://yoursite.com/2020/01/21/test/"/>
+    <id>http://yoursite.com/2020/01/21/test/</id>
+    <published>2020-01-21T09:54:23.000Z</published>
+    <updated>2020-01-21T10:06:13.910Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/.com//1.jpg" alt="test"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;/.com//1.jpg&quot; alt=&quot;test&quot;&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>ajax回调函数判断字符串相等的一个巨坑</title>
+    <link href="http://yoursite.com/2020/01/21/ajax%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E7%AD%89%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B7%A8%E5%9D%91/"/>
+    <id>http://yoursite.com/2020/01/21/ajax%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E7%AD%89%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B7%A8%E5%9D%91/</id>
+    <published>2020-01-21T09:20:27.000Z</published>
+    <updated>2020-01-21T09:52:39.802Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="ajax回调函数中判断响应数据与字符串明明相等却显示不相等"><a href="#ajax回调函数中判断响应数据与字符串明明相等却显示不相等" class="headerlink" title="ajax回调函数中判断响应数据与字符串明明相等却显示不相等"></a>ajax回调函数中判断响应数据与字符串明明相等却显示不相等</h2><p>原先的判断代码：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;#username&quot;).blur(function () &#123;</span><br><span class="line">        $.get(&quot;&#x2F;judgeServlet&quot;,&#123;username:$(&quot;#username&quot;).val()&#125;,function (result) &#123;</span><br><span class="line">            if(result&#x3D;&#x3D;&#x3D;&quot;unavailable&quot;)&#123; &#x2F;&#x2F;明明相等却显示不相等，无法继续执行方法体中方法</span><br><span class="line">                alert(&quot;用户名不可用&quot;);</span><br><span class="line">                $(&quot;#usernameAvailable&quot;).html(&quot;该用户名已注册&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure><p>这里使用<code>===</code>判断符直接将后端响应回来的数据<code>result</code>与字符串<code>&quot;unavailable&quot;</code>进行判断，明明相等却显示不相等，真是日了狗了，气死宝宝了<br>执行代码<code>alert(result===&quot;unavailable&quot;)</code>后浏览器弹窗显示<code>false</code>。艹！</p><h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>看起来明明一样的字符串为什么判断相等时就不相等呢？？？？经过查找资料知道：<br>虽然两个字符串肉眼看上去没有区别，但是用<code>setCharacterEncoding(&quot;UTF-8&quot;)</code> 处理后可能不一样（这里我暂时也不太确定哪里出的问题，网上别人是这样说的）(我处理后发现有个字符串前面有 %EF%BB%BF，另一个则没有 )</p><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>在判断前先调用<code>trim()</code>方法去掉返回的字符串首尾空格,修改后的<code>if</code>判断体中的代码是：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result.trim()&#x3D;&#x3D;&#x3D;&quot;unavailable&quot;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;ajax回调函数中判断响应数据与字符串明明相等却显示不相等&quot;&gt;&lt;a href=&quot;#ajax回调函数中判断响应数据与字符串明明相等却显示不相等&quot; class=&quot;headerlink&quot; title=&quot;ajax回调函数中判断响应数据与字符串明明相等却显示不相等&quot;&gt;&lt;/a
+      
+    
+    </summary>
+    
+    
+      <category term="ajax" scheme="http://yoursite.com/categories/ajax/"/>
+    
+    
+      <category term="ajax" scheme="http://yoursite.com/tags/ajax/"/>
+    
+      <category term="坑" scheme="http://yoursite.com/tags/%E5%9D%91/"/>
+    
+  </entry>
   
   <entry>
     <title>Fastjson的一些坑</title>
@@ -40,11 +91,11 @@
       <category term="json" scheme="http://yoursite.com/categories/Fastjson/json/"/>
     
     
-      <category term="bug" scheme="http://yoursite.com/tags/bug/"/>
+      <category term="坑" scheme="http://yoursite.com/tags/%E5%9D%91/"/>
     
       <category term="Fastjson" scheme="http://yoursite.com/tags/Fastjson/"/>
     
-      <category term="坑" scheme="http://yoursite.com/tags/%E5%9D%91/"/>
+      <category term="bug" scheme="http://yoursite.com/tags/bug/"/>
     
   </entry>
   
@@ -55,7 +106,7 @@
     <published>2020-01-20T06:51:59.000Z</published>
     <updated>2020-01-21T05:16:45.669Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="Fastjosn常用的方法"><a href="#Fastjosn常用的方法" class="headerlink" title="Fastjosn常用的方法"></a>Fastjosn常用的方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public static final Object parse(String text); 　　&#x2F;&#x2F; 把JSON文本parse为JSONObject或者JSONArray </span><br><span class="line"></span><br><span class="line"> public static final JSONObject parseObject(String text)；　　 &#x2F;&#x2F; 把JSON文本parse成JSONObject </span><br><span class="line"></span><br><span class="line"> public static final T parseObject(String text, Class clazz); 　　&#x2F;&#x2F; 把JSON文本parse为JavaBean </span><br><span class="line"></span><br><span class="line"> public static final JSONArray parseArray(String text); 　　&#x2F;&#x2F; 把JSON文本parse成JSONArray </span><br><span class="line"></span><br><span class="line"> public static final List parseArray(String text, Class clazz); 　　&#x2F;&#x2F;把JSON文本parse成JavaBean集合 </span><br><span class="line"></span><br><span class="line"> public static final String toJSONString(Object object); 　　&#x2F;&#x2F; 将JavaBean序列化为JSON文本 </span><br><span class="line"></span><br><span class="line"> public static final String toJSONString(Object object, boolean prettyFormat); 　　&#x2F;&#x2F; 将JavaBean序列化为带格式的JSON文本 </span><br><span class="line"></span><br><span class="line"> public static final Object toJSON(Object javaObject); 　　&#x2F;&#x2F;将JavaBean转换为JSONObject或者JSONArray。</span><br></pre></td></tr></table></figure><h2 id="Fastjson字符串转List-lt-Map-lt-String-Object-gt-gt-或者List-的用法"><a href="#Fastjson字符串转List-lt-Map-lt-String-Object-gt-gt-或者List-的用法" class="headerlink" title="Fastjson字符串转List&lt;Map&lt;String,Object&gt;&gt;(), 或者List()的用法;"></a>Fastjson字符串转List&lt;Map&lt;String,Object&gt;&gt;(), 或者List<String>()的用法;</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Map&lt;String, Object&gt;&gt; list &#x3D; JSONObject.parseObject(respJson, new TypeReference&lt;List&lt;Map&lt;String, Object&gt;&gt;&gt;() &#123;&#125;);</span><br></pre></td></tr></table></figure><h2 id="java对象转json字符串"><a href="#java对象转json字符串" class="headerlink" title="java对象转json字符串"></a>java对象转json字符串</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String jsonString &#x3D; JSON.toJSONString(orange);</span><br></pre></td></tr></table></figure><h2 id="json字符串转java对象"><a href="#json字符串转java对象" class="headerlink" title="json字符串转java对象"></a>json字符串转java对象</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Fruit fruit &#x3D; JSON.parseObject(jsonString,Fruit.class);</span><br></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<h2 id="Fastjosn常用的方法"><a href="#Fastjosn常用的方法" class="headerlink" title="Fastjosn常用的方法"></a>Fastjosn常用的方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public static final Object parse(String text); 　　&#x2F;&#x2F; 把JSON文本parse为JSONObject或者JSONArray </span><br><span class="line"></span><br><span class="line"> public static final JSONObject parseObject(String text)；　　 &#x2F;&#x2F; 把JSON文本parse成JSONObject </span><br><span class="line"></span><br><span class="line"> public static final T parseObject(String text, Class clazz); 　　&#x2F;&#x2F; 把JSON文本parse为JavaBean </span><br><span class="line"></span><br><span class="line"> public static final JSONArray parseArray(String text); 　　&#x2F;&#x2F; 把JSON文本parse成JSONArray </span><br><span class="line"></span><br><span class="line"> public static final List parseArray(String text, Class clazz); 　　&#x2F;&#x2F;把JSON文本parse成JavaBean集合 </span><br><span class="line"></span><br><span class="line"> public static final String toJSONString(Object object); 　　&#x2F;&#x2F; 将JavaBean序列化为JSON文本 </span><br><span class="line"></span><br><span class="line"> public static final String toJSONString(Object object, boolean prettyFormat); 　　&#x2F;&#x2F; 将JavaBean序列化为带格式的JSON文本 </span><br><span class="line"></span><br><span class="line"> public static final Object toJSON(Object javaObject); 　　&#x2F;&#x2F;将JavaBean转换为JSONObject或者JSONArray。</span><br></pre></td></tr></table></figure><h2 id="Fastjson字符串转List-lt-Map-lt-String-Object-gt-gt-或者List-的用法"><a href="#Fastjson字符串转List-lt-Map-lt-String-Object-gt-gt-或者List-的用法" class="headerlink" title="Fastjson字符串转List&lt;Map&lt;String,Object&gt;&gt;(), 或者List()的用法;"></a>Fastjson字符串转List&lt;Map&lt;String,Object&gt;&gt;(), 或者List<String>()的用法;</String></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Map&lt;String, Object&gt;&gt; list &#x3D; JSONObject.parseObject(respJson, new TypeReference&lt;List&lt;Map&lt;String, Object&gt;&gt;&gt;() &#123;&#125;);</span><br></pre></td></tr></table></figure><h2 id="java对象转json字符串"><a href="#java对象转json字符串" class="headerlink" title="java对象转json字符串"></a>java对象转json字符串</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String jsonString &#x3D; JSON.toJSONString(orange);</span><br></pre></td></tr></table></figure><h2 id="json字符串转java对象"><a href="#json字符串转java对象" class="headerlink" title="json字符串转java对象"></a>json字符串转java对象</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Fruit fruit &#x3D; JSON.parseObject(jsonString,Fruit.class);</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
@@ -185,9 +236,9 @@
       <category term="hexo" scheme="http://yoursite.com/categories/hexo/"/>
     
     
-      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
-    
       <category term="bug" scheme="http://yoursite.com/tags/bug/"/>
+    
+      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
     
   </entry>
   
