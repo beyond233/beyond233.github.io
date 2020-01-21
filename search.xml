@@ -9,9 +9,14 @@
 <h2 id="产生bug原因"><a href="#产生bug原因" class="headerlink" title="产生bug原因"></a>产生bug原因</h2><p>该项目已经部署过，使用jason所用的包是后面加的，我在<code>IDEA</code>里面配置了，但是 <code>IDEA</code>不会自动把这些包重新部署到<code>tomcat</code>中去，所以，当网站运行起来后，就报找不到类的错了。</p>
 <h2 id="处理办法"><a href="#处理办法" class="headerlink" title="处理办法"></a>处理办法</h2><p>把<code>Fastjson</code>对应的jar包部署到<code>tomcat</code>中去，即把相应的jar包复制到<code>tcomcat</code>目录下的<code>lib</code>目录下，即可。</p>
 ]]></content>
+      <categories>
+        <category>Fastjson</category>
+        <category>json</category>
+      </categories>
       <tags>
-        <tag>Fastjson</tag>
         <tag>bug</tag>
+        <tag>Fastjson</tag>
+        <tag>坑</tag>
       </tags>
   </entry>
   <entry>
@@ -100,8 +105,8 @@
         <category>hexo</category>
       </categories>
       <tags>
-        <tag>bug</tag>
         <tag>hexo</tag>
+        <tag>bug</tag>
       </tags>
   </entry>
   <entry>
