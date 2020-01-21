@@ -1,6 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>New Document</title>
+    <url>/2020/01/20/New%20Document/</url>
+    <content><![CDATA[<p><img src="https://i.imgur.com/cJQ7deM.jpg" alt=""><br>的说法阿斯蒂芬</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Fastjson的一些坑</title>
+    <url>/2020/01/20/Fastjson%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/</url>
+    <content><![CDATA[<h2 id="bug描述"><a href="#bug描述" class="headerlink" title="bug描述"></a>bug描述</h2><p> 开发环境：<code>Tomcat</code> ， <code>IDEA</code> ， <code>Fastjson</code>对应的jar包版本的是<code>1.2.62</code><br>在<code>servlet</code>中使用<code>Fastjson</code>处理json数据时，浏览器显示以下错误信息。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java.lang.NoClassDefFoundError: com&#x2F;alibaba&#x2F;fastjson&#x2F;JSON</span><br></pre></td></tr></table></figure>
+<p>我之前已经在项目中已经导入了<code>Fastjson</code>的Jar包，运行项目却报了这个错，真是日了狗了</p>
+<h2 id="产生bug原因"><a href="#产生bug原因" class="headerlink" title="产生bug原因"></a>产生bug原因</h2><p>该项目已经部署过，使用jason所用的包是后面加的，我在myeclipse里面配置了，但是myeclipse不会自动把这些包重新部署到tomcat中去，所以，当网站运行起来后，就报找不到类的错了。</p>
+<h2 id="处理办法"><a href="#处理办法" class="headerlink" title="处理办法"></a>处理办法</h2><p>把<code>Fastjson</code>对应的jar包部署到<code>tomcat</code>中去，即把相应的jar包复制到<code>tcomcat</code>目录下的<code>lib</code>目录下，即可。</p>
+]]></content>
+      <tags>
+        <tag>Fastjson</tag>
+        <tag>bug</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Fastjson的使用</title>
+    <url>/2020/01/20/Fastjson%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h2 id="Fastjosn常用的方法"><a href="#Fastjosn常用的方法" class="headerlink" title="Fastjosn常用的方法"></a>Fastjosn常用的方法</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static final Object parse(String text); 　　&#x2F;&#x2F; 把JSON文本parse为JSONObject或者JSONArray </span><br><span class="line"></span><br><span class="line"> public static final JSONObject parseObject(String text)；　　 &#x2F;&#x2F; 把JSON文本parse成JSONObject </span><br><span class="line"></span><br><span class="line"> public static final T parseObject(String text, Class clazz); 　　&#x2F;&#x2F; 把JSON文本parse为JavaBean </span><br><span class="line"></span><br><span class="line"> public static final JSONArray parseArray(String text); 　　&#x2F;&#x2F; 把JSON文本parse成JSONArray </span><br><span class="line"></span><br><span class="line"> public static final List parseArray(String text, Class clazz); 　　&#x2F;&#x2F;把JSON文本parse成JavaBean集合 </span><br><span class="line"></span><br><span class="line"> public static final String toJSONString(Object object); 　　&#x2F;&#x2F; 将JavaBean序列化为JSON文本 </span><br><span class="line"></span><br><span class="line"> public static final String toJSONString(Object object, boolean prettyFormat); 　　&#x2F;&#x2F; 将JavaBean序列化为带格式的JSON文本 </span><br><span class="line"></span><br><span class="line"> public static final Object toJSON(Object javaObject); 　　&#x2F;&#x2F;将JavaBean转换为JSONObject或者JSONArray。</span><br></pre></td></tr></table></figure>
+<h2 id="Fastjson字符串转List-lt-Map-lt-String-Object-gt-gt-或者List-的用法"><a href="#Fastjson字符串转List-lt-Map-lt-String-Object-gt-gt-或者List-的用法" class="headerlink" title="Fastjson字符串转List&lt;Map&lt;String,Object&gt;&gt;(), 或者List()的用法;"></a>Fastjson字符串转List&lt;Map&lt;String,Object&gt;&gt;(), 或者List<String>()的用法;</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">List&lt;Map&lt;String, Object&gt;&gt; list &#x3D; JSONObject.parseObject(respJson, new TypeReference&lt;List&lt;Map&lt;String, Object&gt;&gt;&gt;() &#123;&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="java对象转json字符串"><a href="#java对象转json字符串" class="headerlink" title="java对象转json字符串"></a>java对象转json字符串</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">String jsonString &#x3D; JSON.toJSONString(orange);</span><br></pre></td></tr></table></figure>
+
+<h2 id="json字符串转java对象"><a href="#json字符串转java对象" class="headerlink" title="json字符串转java对象"></a>json字符串转java对象</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Fruit fruit &#x3D; JSON.parseObject(jsonString,Fruit.class);</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>json</tag>
+        <tag>Fastjosn</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ajax请求后端响应数据乱码问题解决</title>
+    <url>/2020/01/19/ajax%E8%AF%B7%E6%B1%82%E5%90%8E%E7%AB%AF%E5%93%8D%E5%BA%94%E6%95%B0%E6%8D%AE%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<h2 id="response对象要设置编码格式"><a href="#response对象要设置编码格式" class="headerlink" title="response对象要设置编码格式"></a>response对象要设置编码格式</h2><p><code>response</code>对象要设置<code>contentType</code>和<code>characterEncoding</code>为<code>UTF-8</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">response.setContentType(&quot;text&#x2F;html;charset&#x3D;UTF-8&quot;);</span><br><span class="line">response.setCharacterEncoding(&quot;UTF-8&quot;);</span><br></pre></td></tr></table></figure>
+<h2 id="输出流的问题"><a href="#输出流的问题" class="headerlink" title="输出流的问题"></a>输出流的问题</h2><p>如果给前端响应数据使用的是通过<code>response</code>对象得到的输出流对象，这一步一定要在<code>response</code>设置编码格式为<code>UTF-8</code>之后！！！（血泪教训）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">response.setCharacterEncoding(&quot;UTF-8&quot;);</span><br><span class="line">response.setContentType(&quot;text&#x2F;html;charset&#x3D;UTF-8&quot;);</span><br><span class="line">.....</span><br><span class="line">PrintWriter writer &#x3D; response.getWriter();&#x2F;&#x2F;这一步一定要在response设置编码格式为UTF-8之后</span><br><span class="line">writer.println(&quot;收到请求&quot;);</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>乱码</category>
+      </categories>
+      <tags>
+        <tag>ajax</tag>
+        <tag>乱码</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>令牌机制（token）防止表单重复提交</title>
     <url>/2020/01/16/%E4%BB%A4%E7%89%8C%E6%9C%BA%E5%88%B6%EF%BC%88token%EF%BC%89%E9%98%B2%E6%AD%A2%E8%A1%A8%E5%8D%95%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/</url>
     <content><![CDATA[<h2 id="令牌机制"><a href="#令牌机制" class="headerlink" title="令牌机制"></a>令牌机制</h2><p><code>token</code>即标志、记号的意思，在IT领域也叫作<code>令牌</code>。其实说的更通俗点可以叫暗号，在一些数据传输之前，要先进行暗号的核对，不同的暗号被授权不同的数据操作。</p>
@@ -57,8 +106,8 @@
         <category>hexo</category>
       </categories>
       <tags>
-        <tag>hexo</tag>
         <tag>bug</tag>
+        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
