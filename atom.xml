@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-01-20T12:22:02.693Z</updated>
+  <updated>2020-01-20T10:23:39.676Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,29 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>New Document</title>
-    <link href="http://yoursite.com/2020/01/20/New%20Document/"/>
-    <id>http://yoursite.com/2020/01/20/New%20Document/</id>
-    <published>2020-01-20T12:19:54.319Z</published>
-    <updated>2020-01-20T12:22:02.693Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://i.imgur.com/cJQ7deM.jpg" alt=""><br>的说法阿斯蒂芬</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;&lt;img src=&quot;https://i.imgur.com/cJQ7deM.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;的说法阿斯蒂芬&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-    
-    
-  </entry>
   
   <entry>
     <title>Fastjson的一些坑</title>
@@ -70,7 +47,7 @@
     <link href="http://yoursite.com/2020/01/20/Fastjson%E5%AD%A6%E4%B9%A0/"/>
     <id>http://yoursite.com/2020/01/20/Fastjson%E5%AD%A6%E4%B9%A0/</id>
     <published>2020-01-20T06:51:59.000Z</published>
-    <updated>2020-01-20T10:25:09.964Z</updated>
+    <updated>2020-01-21T05:16:45.669Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Fastjosn常用的方法"><a href="#Fastjosn常用的方法" class="headerlink" title="Fastjosn常用的方法"></a>Fastjosn常用的方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public static final Object parse(String text); 　　&#x2F;&#x2F; 把JSON文本parse为JSONObject或者JSONArray </span><br><span class="line"></span><br><span class="line"> public static final JSONObject parseObject(String text)；　　 &#x2F;&#x2F; 把JSON文本parse成JSONObject </span><br><span class="line"></span><br><span class="line"> public static final T parseObject(String text, Class clazz); 　　&#x2F;&#x2F; 把JSON文本parse为JavaBean </span><br><span class="line"></span><br><span class="line"> public static final JSONArray parseArray(String text); 　　&#x2F;&#x2F; 把JSON文本parse成JSONArray </span><br><span class="line"></span><br><span class="line"> public static final List parseArray(String text, Class clazz); 　　&#x2F;&#x2F;把JSON文本parse成JavaBean集合 </span><br><span class="line"></span><br><span class="line"> public static final String toJSONString(Object object); 　　&#x2F;&#x2F; 将JavaBean序列化为JSON文本 </span><br><span class="line"></span><br><span class="line"> public static final String toJSONString(Object object, boolean prettyFormat); 　　&#x2F;&#x2F; 将JavaBean序列化为带格式的JSON文本 </span><br><span class="line"></span><br><span class="line"> public static final Object toJSON(Object javaObject); 　　&#x2F;&#x2F;将JavaBean转换为JSONObject或者JSONArray。</span><br></pre></td></tr></table></figure><h2 id="Fastjson字符串转List-lt-Map-lt-String-Object-gt-gt-或者List-的用法"><a href="#Fastjson字符串转List-lt-Map-lt-String-Object-gt-gt-或者List-的用法" class="headerlink" title="Fastjson字符串转List&lt;Map&lt;String,Object&gt;&gt;(), 或者List()的用法;"></a>Fastjson字符串转List&lt;Map&lt;String,Object&gt;&gt;(), 或者List<String>()的用法;</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Map&lt;String, Object&gt;&gt; list &#x3D; JSONObject.parseObject(respJson, new TypeReference&lt;List&lt;Map&lt;String, Object&gt;&gt;&gt;() &#123;&#125;);</span><br></pre></td></tr></table></figure><h2 id="java对象转json字符串"><a href="#java对象转json字符串" class="headerlink" title="java对象转json字符串"></a>java对象转json字符串</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String jsonString &#x3D; JSON.toJSONString(orange);</span><br></pre></td></tr></table></figure><h2 id="json字符串转java对象"><a href="#json字符串转java对象" class="headerlink" title="json字符串转java对象"></a>json字符串转java对象</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Fruit fruit &#x3D; JSON.parseObject(jsonString,Fruit.class);</span><br></pre></td></tr></table></figure>]]></content>
     
