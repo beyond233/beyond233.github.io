@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-01-26T10:11:25.489Z</updated>
+  <updated>2020-01-27T03:24:31.374Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Log4j的配置方法</title>
+    <link href="http://yoursite.com/2020/01/27/og4j%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95/"/>
+    <id>http://yoursite.com/2020/01/27/og4j%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95/</id>
+    <published>2020-01-27T03:11:00.000Z</published>
+    <updated>2020-01-27T03:24:31.374Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="在Spring项目做单元测试时控制台报log4j配置错误"><a href="#在Spring项目做单元测试时控制台报log4j配置错误" class="headerlink" title="在Spring项目做单元测试时控制台报log4j配置错误"></a>在Spring项目做单元测试时控制台报log4j配置错误</h2><p>我在项目中已经配置了<code>log4j.properties</code>文件，但在做单元测试时控制台还是报错。可见其根本没卵用！<code>log4j.properties</code>文件内容如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> #Global logging configuration</span><br><span class="line">#log4j.rootLogger&#x3D;ERROR, stdout</span><br><span class="line"># MyBatis logging configuration...</span><br><span class="line">log4j.rootLogger&#x3D;DEBUG</span><br><span class="line"># log4j.logger.org.mybatis.example.BlogMapper&#x3D;TRACE</span><br><span class="line"># Console output...</span><br><span class="line"># log4j.appender.stdout&#x3D;org.apache.log4j.ConsoleAppender</span><br><span class="line"># log4j.appender.stdout.layout&#x3D;org.apache.log4j.PatternLayout</span><br><span class="line"># log4j.appender.stdout.layout.ConversionPattern&#x3D;%5p [%t] - %m%n</span><br></pre></td></tr></table></figure><p>报错内容：ERROR StatusLogger No log4j2 configuration file found. Using default configuration: logging only errors to the console.”<br>原因：没有正确的配置log4j！报错内容也说得也很明白了</p><h2 id="log4j的正确配置方法"><a href="#log4j的正确配置方法" class="headerlink" title="log4j的正确配置方法"></a>log4j的正确配置方法</h2><p>查资料发现，log4j2只支持xml和json两种格式的配置，所以配置log4j.properties是没有作用的。<br>og4j的2.x版本在默认情况下，系统选择configuration文件的优先级如下：</p><p>1.classpath下名为log4j-test.json或者log4j-test.jsn文件</p><p>2.classpath下名为log4j2-test.xml</p><p>3.classpath下名为log4j.json或者log4j.jsn文件</p><p>4.classpath下名为log4j2.xml<br>所以我将<code>log4j.properties</code>修改为XML配置文件<code>log4j2.xml</code>，并将其放在类路径也就是src下面，问题解决！<br><code>log4j2.xml</code>内容如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;Configuration status&#x3D;&quot;WARN&quot;&gt;</span><br><span class="line">    &lt;Appenders&gt;</span><br><span class="line">        &lt;Console name&#x3D;&quot;Console&quot; target&#x3D;&quot;SYSTEM_OUT&quot;&gt;</span><br><span class="line">            &lt;PatternLayout pattern&#x3D;&quot;%d&#123;YYYY-MM-dd HH:mm:ss&#125; [%t] %-5p %c&#123;1&#125;:%L - %msg%n&quot; &#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;Console&gt;</span><br><span class="line"></span><br><span class="line">        &lt;RollingFile name&#x3D;&quot;RollingFile&quot; filename&#x3D;&quot;log&#x2F;test.log&quot;</span><br><span class="line">                     filepattern&#x3D;&quot;$&#123;logPath&#125;&#x2F;%d&#123;YYYYMMddHHmmss&#125;-fargo.log&quot;&gt;</span><br><span class="line">            &lt;PatternLayout pattern&#x3D;&quot;%d&#123;YYYY-MM-dd HH:mm:ss&#125; [%t] %-5p %c&#123;1&#125;:%L - %msg%n&quot; &#x2F;&gt;</span><br><span class="line">            &lt;Policies&gt;</span><br><span class="line">                &lt;SizeBasedTriggeringPolicy size&#x3D;&quot;10 MB&quot; &#x2F;&gt;</span><br><span class="line">            &lt;&#x2F;Policies&gt;</span><br><span class="line">            &lt;DefaultRolloverStrategy max&#x3D;&quot;20&quot; &#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;RollingFile&gt;</span><br><span class="line"></span><br><span class="line">    &lt;&#x2F;Appenders&gt;</span><br><span class="line">    &lt;Loggers&gt;</span><br><span class="line">        &lt;Root level&#x3D;&quot;info&quot;&gt;</span><br><span class="line">            &lt;AppenderRef ref&#x3D;&quot;Console&quot; &#x2F;&gt;</span><br><span class="line">            &lt;AppenderRef ref&#x3D;&quot;RollingFile&quot; &#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;Root&gt;</span><br><span class="line">    &lt;&#x2F;Loggers&gt;</span><br><span class="line">&lt;&#x2F;Configuration&gt;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;在Spring项目做单元测试时控制台报log4j配置错误&quot;&gt;&lt;a href=&quot;#在Spring项目做单元测试时控制台报log4j配置错误&quot; class=&quot;headerlink&quot; title=&quot;在Spring项目做单元测试时控制台报log4j配置错误&quot;&gt;&lt;/a&gt;在S
+      
+    
+    </summary>
+    
+    
+      <category term="bug" scheme="http://yoursite.com/categories/bug/"/>
+    
+      <category term="Log4j" scheme="http://yoursite.com/categories/bug/Log4j/"/>
+    
+    
+      <category term="Log4j" scheme="http://yoursite.com/tags/Log4j/"/>
+    
+      <category term="日志" scheme="http://yoursite.com/tags/%E6%97%A5%E5%BF%97/"/>
+    
+      <category term="配置" scheme="http://yoursite.com/tags/%E9%85%8D%E7%BD%AE/"/>
+    
+  </entry>
   
   <entry>
     <title>安装Tomcat作为一个服务开机自启动</title>
@@ -181,9 +213,9 @@
       <category term="令牌" scheme="http://yoursite.com/categories/%E4%BB%A4%E7%89%8C/"/>
     
     
-      <category term="小知识点" scheme="http://yoursite.com/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
-    
       <category term="令牌" scheme="http://yoursite.com/tags/%E4%BB%A4%E7%89%8C/"/>
+    
+      <category term="小知识点" scheme="http://yoursite.com/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
     
       <category term="表单提交" scheme="http://yoursite.com/tags/%E8%A1%A8%E5%8D%95%E6%8F%90%E4%BA%A4/"/>
     
@@ -212,11 +244,11 @@
       <category term="Spring" scheme="http://yoursite.com/categories/Spring/"/>
     
     
+      <category term="配置" scheme="http://yoursite.com/tags/%E9%85%8D%E7%BD%AE/"/>
+    
       <category term="Spring" scheme="http://yoursite.com/tags/Spring/"/>
     
       <category term="bean" scheme="http://yoursite.com/tags/bean/"/>
-    
-      <category term="配置" scheme="http://yoursite.com/tags/%E9%85%8D%E7%BD%AE/"/>
     
   </entry>
   
