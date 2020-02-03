@@ -1,9 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>SpringMVC中JSP表单发送POST请求出现乱码</title>
+    <url>/2020/02/03/SpringMVC%E4%B8%ADJSP%E8%A1%A8%E5%8D%95%E5%8F%91%E9%80%81POST%E8%AF%B7%E6%B1%82%E5%87%BA%E7%8E%B0%E4%B9%B1%E7%A0%81/</url>
+    <content><![CDATA[<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>在<code>web.xml</code>中配置如下<code>filter</code>，<code>字符过滤filter</code>一定要在<code>所有filter之前</code>配置！！！</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--    配置字符过滤filter--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>characterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--encoding解决POST请求乱码--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--forceEncoding解决response响应乱码--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>forceEncoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>characterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="可能出现的问题"><a href="#可能出现的问题" class="headerlink" title="可能出现的问题"></a>可能出现的问题</h2><p>1.如果在项目使用了<code>Restful</code>的请求方式，那么上面的<code>字符过滤filter</code>一定要在配置支持<code>Restful</code>的<code>filter</code>之前,或者说<code>字符过滤filter</code>一定要在<code>所有filter</code>之前配置！因为<code>xml</code>中的<code>filter</code>是按照<code>配置先后顺序</code>进行过滤的。如果在<code>字符过滤filter</code>进行字符过滤之前，其他<code>filter</code>获取了<code>参数值</code>并进行了相关操作,那再进行字符过滤当然就没有用了。</p>
+<p>2.如果上面的<code>字符过滤filter</code>配置后还无效，还可以在<code>Tomcat</code>的<code>server.xml</code>中进行<code>URIEncoding</code>的配置，具体配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">URIEncoding</span>=<span class="string">"UTF-8"</span></span></span><br><span class="line"><span class="tag">             <span class="attr">port</span>=<span class="string">"8080"</span> </span></span><br><span class="line"><span class="tag">             <span class="attr">protocol</span>=<span class="string">"HTTP/1.1"</span></span></span><br><span class="line"><span class="tag">             <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span></span></span><br><span class="line"><span class="tag">             <span class="attr">redirectPort</span>=<span class="string">"8443"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​    </p>
+]]></content>
+  </entry>
+  <entry>
+    <title>MarkDown常用语法</title>
+    <url>/2020/01/29/MarkDown%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="可勾选事项"><a href="#可勾选事项" class="headerlink" title="可勾选事项"></a>可勾选事项</h2><p>语法：<code>- [ ] 内容</code>    未勾选</p>
+<pre><code>`- [x] 内容 `     已勾选</code></pre><p>示例：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">- </span>[ ] 一二三四五</span><br><span class="line"><span class="bullet">- </span>[ ] 上山打老虎</span><br><span class="line"><span class="bullet">- </span>[ ] 老虎没打到</span><br><span class="line"><span class="bullet">- </span>[x] 打到小松鼠</span><br></pre></td></tr></table></figure>
+
+<p>效果：</p>
+<ul>
+<li><input disabled type="checkbox"> 一二三四五</li>
+<li><input disabled type="checkbox"> 上山打老虎</li>
+<li><input disabled type="checkbox"> 老虎没打到</li>
+<li><input checked disabled type="checkbox"> 打到小松鼠</li>
+</ul>
+<h2 id="画图"><a href="#画图" class="headerlink" title="画图"></a>画图</h2><h2 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h2><h2 id="插入视频"><a href="#插入视频" class="headerlink" title="插入视频"></a>插入视频</h2>]]></content>
+  </entry>
+  <entry>
     <title>Log4j的配置方法</title>
-    <url>/2020/01/27/og4j%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="在Spring项目做单元测试时控制台报log4j配置错误"><a href="#在Spring项目做单元测试时控制台报log4j配置错误" class="headerlink" title="在Spring项目做单元测试时控制台报log4j配置错误"></a>在Spring项目做单元测试时控制台报log4j配置错误</h2><p>我在项目中已经配置了<code>log4j.properties</code>文件，但在做单元测试时控制台还是报错。可见其根本没卵用！<code>log4j.properties</code>文件内容如下：</p>
+    <url>/2020/01/27/Log4j%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="在Spring项目做单元测试时控制台报log4j配置错误"><a href="#在Spring项目做单元测试时控制台报log4j配置错误" class="headerlink" title="在Spring项目做单元测试时控制台报log4j配置错误"></a>在Spring项目做单元测试时控制台报log4j配置错误</h2><p>我  在项目中已经配置了<code>log4j.properties</code>文件，但在做单元测试时控制台还是报错。可见其根本没卵用！<code>log4j.properties</code>文件内容如下：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> #Global logging configuration</span><br><span class="line">#log4j.rootLogger&#x3D;ERROR, stdout</span><br><span class="line"># MyBatis logging configuration...</span><br><span class="line">log4j.rootLogger&#x3D;DEBUG</span><br><span class="line"># log4j.logger.org.mybatis.example.BlogMapper&#x3D;TRACE</span><br><span class="line"># Console output...</span><br><span class="line"># log4j.appender.stdout&#x3D;org.apache.log4j.ConsoleAppender</span><br><span class="line"># log4j.appender.stdout.layout&#x3D;org.apache.log4j.PatternLayout</span><br><span class="line"># log4j.appender.stdout.layout.ConversionPattern&#x3D;%5p [%t] - %m%n</span><br></pre></td></tr></table></figure>
 <p>报错内容：ERROR StatusLogger No log4j2 configuration file found. Using default configuration: logging only errors to the console.”<br>原因：没有正确的配置log4j！报错内容也说得也很明白了</p>
 <h2 id="log4j的正确配置方法"><a href="#log4j的正确配置方法" class="headerlink" title="log4j的正确配置方法"></a>log4j的正确配置方法</h2><p>查资料发现，log4j2只支持xml和json两种格式的配置，所以配置log4j.properties是没有作用的。<br>og4j的2.x版本在默认情况下，系统选择configuration文件的优先级如下：</p>
